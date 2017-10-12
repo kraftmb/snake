@@ -29,7 +29,7 @@ In this part, you should implement the basic setup, without any concern for a fa
 type paddle = { x : float }
 ```
 
-As we described in lecture, an application may be in one of a fixed number of *states*. For part 1, , only 2 states would be needed, something like:
+As we described in lecture, an application may be in one of a fixed number of *states*. For part 1, only 2 states would be needed, something like:
 
 ```ocaml
 type state  = Start | Ready
