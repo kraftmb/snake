@@ -1,5 +1,5 @@
 (* file: paddle.ml
-   author: Bob Muller
+   author: Matthew Kraft
 
    CSCI 1103 Computer Science I Honors
 
@@ -17,29 +17,121 @@ open Image
 open Color
 open Cs1103
 
-let clockRate = 0.02
+let clockRate = 0.01
 
-let displayWidth = 800.
+let displayWidth = 600.
 let displayHeight = displayWidth
 let margin = 10.0
 let background = Image.rectangle displayWidth displayHeight Color.dodgerBlue
+let initialX = Random.float 200.
 
-type model = unit
+type paddle = { x : float}
+
+
+type state = Start | Ready
+
+
+type ball = { x : float; y : float}
+
+type ball2 = { x : float; y : float}
+
+type score = { n : int }
+
+
+type model = { state  : state
+             ; ball   : ball
+             ; paddle : paddle
+             ; score  : score
+             ; ball2  : ball2
+             }
+
 
 (* draw : model -> Image.t
 *)
-let draw () =
-  let msg = Image.text "Nothing Here!" ~size:40.0 Color.white
-  in
-  Image.place_image msg (260., 360.) background
+let draw { state; ball; paddle; score; ball2} =
+  match { state; ball; paddle; score; ball2 } with
+  | { state = Start; ball; paddle} ->
+    (let msg = Image.text "Press left or right arrow to start." ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+    let images = [msg; paddler] in
+    let posns = [((displayWidth /. 10.), (displayHeight /. 2.)); (paddle.x, (displayHeight -. (35. +. margin)))]
+    in
+    Image.place_images images posns background)
+  | { state = Ready; ball; paddle} ->
+    let scoreBoard = Image.text ("Score = " ^ string_of_int score.n)~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+    let redBall = Image.circle 50. Color.red in
+    let greenBall = Image.circle 50. Color.green in
+    let objects = [paddler; redBall; scoreBoard; greenBall] in
+    let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y)] in
+    Image.place_images objects posn background
+
+
+(* update : model -> model
+*)
+
+let update { state; ball; paddle; score; ball2 } =
+  match { state; ball; paddle; score; ball2 } with
+  | { state = Start; ball; paddle; ball2 } -> World { state; ball; paddle; score; ball2 }
+  | { state = Ready; ball; paddle; ball2 } ->
+    match ball.y +. 100. >= (displayHeight -. 45.) with
+    | true ->
+      ((match ball.x > paddle.x && ball.x < (paddle.x +. 250.) with
+       | true -> World { state; ball = { x = Random.float displayWidth; y = 0.}; paddle; score = {n = score.n + 1}; ball2 = {x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) +. 1.)}}
+       | false -> match ball2.y +. 100. >= (displayHeight -. 45.) with
+           | true ->
+             (match ball2.x > paddle.x && ball2.x < (paddle.x +. 250.) with
+              | true -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score = {n = score.n + 1}; ball2 = { x = Random.float displayWidth; y = 0.}}
+              | false -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) +. 1.)} })
+           | false ->
+             World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) +. 1.)} }))
+    | false ->
+      (match ball2.y +. 100. >= (displayHeight -. 45.) with
+      | true ->
+        (match ball2.x > paddle.x && ball2.x < (paddle.x +. 250.) with
+         | true -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score = {n = score.n + 1}; ball2 = { x = Random.float displayWidth; y = 0.}}
+         | false -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) +. 1.)} })
+      | false ->
+        World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 0.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) +. 1.)} })
+
+
+
+(* handleKey : model -> key -> model
+*)
+
+let handleKey model key =
+  match (model.state, key) with
+  | (Start, "left") | (Start, "right") -> World { model with state = Ready }
+  | (Ready, "left")  ->
+    (match model.paddle.x = margin with
+    | true  -> World { state = model.state; ball = model.ball; paddle = model.paddle; score = model.score; ball2 = model.ball2}
+    | false -> World { model with paddle = { x = model.paddle.x -. 5. } })
+  | (Ready, "right") ->
+    (match model.paddle.x = (displayWidth -. (margin +. 250.)) with
+    | true -> World { state = model.state; ball = model.ball; paddle = model.paddle; score = model.score; ball2 = model.ball2}
+    | false -> World { model with paddle = { x =  model.paddle.x +. 5. } })
+  | (_,_) -> failwith "hello"
+
+
+let finished { state; ball; paddle; ball2 } = ball.y = displayHeight || ball2.y = displayHeight
+
+let gameOver { state; ball; paddle; ball2 } =
+  let sign = Image.text "GAME OVER" ~size:50.0 Color.black in
+  place_image sign (100., 250.) background
+
 
 (* go : unit -> unit
 *)
 let go () =
-  World.big_bang ()
+  World.big_bang { state = Start; ball = { x = initialX; y = 0.}; paddle = { x = displayWidth /. 2. -. 125.}; score = {n = 0}; ball2 = { x = Random.float (displayWidth /. 2.); y = 0.} }
     ~name: "Paddle"
     ~width: (f2I displayWidth)
     ~height: (f2I displayHeight)
     ~to_draw: draw
+    ~on_tick: update
+    ~rate: clockRate
+    ~on_key_press: handleKey
+    ~stop_when: finished
+    ~to_draw_last: gameOver
 
 let s = go ()
