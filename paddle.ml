@@ -137,7 +137,7 @@ let handleKey model key =
                       ; paddle = model.paddle
                       ; score = model.score
                       ; ball2 = model.ball2}
-    | false -> World { model with paddle = { x = model.paddle.x -. 15. } })
+    | false -> World { model with paddle = { x = model.paddle.x -. 30. } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
      | true -> World { state = model.state
@@ -145,7 +145,7 @@ let handleKey model key =
                      ; paddle = model.paddle
                      ; score = model.score
                      ; ball2 = model.ball2}
-    | false -> World { model with paddle = { x =  model.paddle.x +. 15. } })
+    | false -> World { model with paddle = { x =  model.paddle.x +. 30. } })
   | (_,_) -> failwith "hello"
 
 
