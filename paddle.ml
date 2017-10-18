@@ -58,7 +58,7 @@ let draw { state; ball; paddle; score; ball2} =
     in
     Image.place_images images posns background)
   | { state = Ready; ball; paddle} ->
-    let scoreBoard = Image.text ("Score = " ^ string_of_int score.n)~size:30.0 Color.white in
+    let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
     let paddler = Image.rectangle 250. 35. Color.black in
     let redBall = Image.circle 50. Color.red in
     let brownBall = Image.circle 50. Color.darkGoldenrod4 in
@@ -149,11 +149,12 @@ let handleKey model key =
   | (_,_) -> failwith "hello"
 
 
-let finished { state; ball; paddle; ball2 } = ball.y > displayHeight || ball2.y > displayHeight
+let finished { state; ball; paddle; score; ball2 } = ball.y > displayHeight || ball2.y > displayHeight
 
-let gameOver { state; ball; paddle; ball2 } =
+let gameOver { state; ball; paddle; score; ball2 } =
   let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
-  place_image sign (125., 250.) background
+  let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
+  place_images [sign; finalScore] [(125., 250.); (215., 350.)] background
 
 
 (* go : unit -> unit
