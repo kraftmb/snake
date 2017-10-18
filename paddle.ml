@@ -77,22 +77,49 @@ let update { state; ball; paddle; score; ball2 } =
     match (ball.y +. 100. >= (displayHeight -. 45.)) && (ball.y < displayHeight) with
     | true ->
       ((match ball.x > (paddle.x -. 10.) && ball.x < (paddle.x +. 250.) with
-          | true -> World { state; ball = { x = Random.float (displayWidth -. 50.); y = 0.}; paddle; score = {n = score.n + 1}; ball2 = {x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) *. 2.5)}}
+          | true -> World { state
+                          ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
+                          ; paddle; score = {n = score.n + 1}
+                          ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)}}
        | false -> match ball2.y +. 100. >= (displayHeight -. 45.) with
            | true ->
              (match ball2.x > (paddle.x -. 10.) && ball2.x < (paddle.x +. 250.) with
-              | true -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score = {n = score.n + 1}; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
-              | false -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) *. 2.5)} })
+              | true  -> World { state
+                               ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                               ; paddle
+                               ; score = {n = score.n + 1}
+                               ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
+              | false -> World { state
+                               ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                               ; paddle
+                               ; score
+                               ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
            | false ->
-             World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) *. 2.5)} }))
+             World { state
+                   ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                   ; paddle
+                   ; score
+                   ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} }))
     | false ->
       (match ball2.y +. 100. >= (displayHeight -. 45.) with
       | true ->
         (match ball2.x > (paddle.x -. 10.) && ball2.x < (paddle.x +. 250.) with
-         | true -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score = {n = score.n + 1}; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
-         | false -> World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) *. 2.5)} })
+         | true -> World { state
+                         ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                         ; paddle
+                         ; score = {n = score.n + 1}
+                         ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
+         | false -> World { state
+                          ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                          ; paddle
+                          ; score
+                          ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
       | false ->
-        World { state; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}; paddle; score; ball2 = { x = ball2.x; y = ball2.y +. ((1. /. 5. *. float score.n) *. 2.5)} })
+        World { state
+              ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+              ; paddle
+              ; score
+              ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
 
 
 
@@ -104,11 +131,19 @@ let handleKey model key =
   | (Start, "left") | (Start, "right") -> World { model with state = Ready }
   | (Ready, "left")  ->
     (match model.paddle.x <= margin with
-    | true  -> World { state = model.state; ball = model.ball; paddle = model.paddle; score = model.score; ball2 = model.ball2}
+     | true  -> World { state = model.state
+                      ; ball = model.ball
+                      ; paddle = model.paddle
+                      ; score = model.score
+                      ; ball2 = model.ball2}
     | false -> World { model with paddle = { x = model.paddle.x -. 15. } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
-    | true -> World { state = model.state; ball = model.ball; paddle = model.paddle; score = model.score; ball2 = model.ball2}
+     | true -> World { state = model.state
+                     ; ball = model.ball
+                     ; paddle = model.paddle
+                     ; score = model.score
+                     ; ball2 = model.ball2}
     | false -> World { model with paddle = { x =  model.paddle.x +. 15. } })
   | (_,_) -> failwith "hello"
 
@@ -123,7 +158,11 @@ let gameOver { state; ball; paddle; ball2 } =
 (* go : unit -> unit
 *)
 let go () =
-  World.big_bang { state = Start; ball = { x = initialX; y = 0.}; paddle = { x = displayWidth /. 2. -. 125.}; score = {n = 0}; ball2 = { x = Random.float (displayWidth /. 2.); y = 0.} }
+  World.big_bang { state = Start
+                 ; ball = { x = initialX; y = 0.}
+                 ; paddle = { x = displayWidth /. 2. -. 125.}
+                 ; score = {n = 0}
+                 ; ball2 = { x = Random.float (displayWidth /. 2.); y = 0.} }
     ~name: "Paddle"
     ~width: (f2I displayWidth)
     ~height: (f2I displayHeight)
