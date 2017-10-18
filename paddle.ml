@@ -77,10 +77,11 @@ let update { state; ball; paddle; score; ball2 } =
     match (ball.y +. 100. >= (displayHeight -. 45.)) && (ball.y < displayHeight) with
     | true ->
       ((match ball.x > (paddle.x -. 10.) && ball.x < (paddle.x +. 250.) with
-          | true -> World { state
-                          ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
-                          ; paddle; score = {n = score.n + 1}
-                          ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)}}
+       | true  -> World { state
+                        ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
+                        ; paddle
+                        ; score = {n = score.n + 1}
+                        ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)}}
        | false -> match ball2.y +. 100. >= (displayHeight -. 45.) with
            | true ->
              (match ball2.x > (paddle.x -. 10.) && ball2.x < (paddle.x +. 250.) with
@@ -104,11 +105,11 @@ let update { state; ball; paddle; score; ball2 } =
       (match ball2.y +. 100. >= (displayHeight -. 45.) with
       | true ->
         (match ball2.x > (paddle.x -. 10.) && ball2.x < (paddle.x +. 250.) with
-         | true -> World { state
-                         ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
-                         ; paddle
-                         ; score = {n = score.n + 1}
-                         ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
+         | true  -> World { state
+                          ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                          ; paddle
+                          ; score = {n = score.n + 1}
+                          ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}}
          | false -> World { state
                           ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
                           ; paddle
