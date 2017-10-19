@@ -19,10 +19,19 @@ open Cs1103
 
 let clockRate = 0.02
 
+let randomColor = randomColor()
+
 let displayWidth = 750.
 let displayHeight = displayWidth
 let margin = 10.0
-let background = Image.rectangle displayWidth displayHeight Color.dodgerBlue
+let background = Image.rectangle displayWidth displayHeight Color.red
+let background2 = Image.rectangle displayWidth displayHeight Color.orangeRed
+let background3 = Image.rectangle displayWidth displayHeight Color.yellow
+let background4 = Image.rectangle displayWidth displayHeight Color.green3
+let background5 = Image.rectangle displayWidth displayHeight Color.blue
+let background6 = Image.rectangle displayWidth displayHeight Color.darkBlue
+let background7 = Image.rectangle displayWidth displayHeight Color.violet
+let background8 = Image.rectangle displayWidth displayHeight Color.black
 let initialX = Random.float 500.
 
 type paddle = { x : float}
@@ -45,27 +54,86 @@ type model = { state  : state
              ; ball2  : ball2
              }
 
-
 (* draw : model -> Image.t
 *)
 let draw { state; ball; paddle; score; ball2} =
   match { state; ball; paddle; score; ball2 } with
-  | { state = Start; ball; paddle} ->
+  | { state = Start; ball; paddle; score; ball2} ->
     (let msg = Image.text "Press left or right arrow to start." ~size:40.0 Color.white in
     let paddler = Image.rectangle 250. 35. Color.black in
     let images = [msg; paddler] in
     let posns = [((displayWidth /. 15.), (displayHeight /. 3.)); (paddle.x, (displayHeight -. (35. +. margin)))]
     in
     Image.place_images images posns background)
-  | { state = Ready; ball; paddle} ->
-    let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
-    let paddler = Image.rectangle 250. 35. Color.black in
-    let redBall = Image.circle 50. Color.red in
-    let brownBall = Image.circle 50. Color.darkGoldenrod4 in
-    let objects = [paddler; redBall; scoreBoard; brownBall] in
-    let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y)] in
+  | { state = Ready; ball; paddle; score; ball2} ->
+    match score.n with
+    | 0 | 1 | 2 | 3 | 4 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+      let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.black in
+      let brownBall = Image.circle 50. Color.white in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+      let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
     Image.place_images objects posn background
-
+    | 5 | 6 | 7 | 8 | 9 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+      let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.blue in
+      let brownBall = Image.circle 50. Color.cyan in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+      let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background2
+    | 10 | 11 | 12 | 13 | 14 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.gray10 in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.pink in
+      let brownBall = Image.circle 50. Color.violet in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold4 in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background3
+    | 15 | 16 | 17 | 18 | 19 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.yellow in
+      let brownBall = Image.circle 50. Color.white in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background4
+    | 20 | 21 | 22 | 23 | 24 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.maroon in
+      let brownBall = Image.circle 50. Color.pink4 in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background5
+    | 25 | 26 | 27 | 28 | 29 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.gray in
+      let brownBall = Image.circle 50. Color.gold in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background6
+    | 30 | 31 | 32 | 33 | 34 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.greenYellow in
+      let brownBall = Image.circle 50. Color.antiqueWhite4 in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background7
+    | 35 | 36 | 37 | 38 | 39 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
+    let paddler = Image.rectangle 250. 35. Color.black in
+      let redBall = Image.circle 50. Color.gold2 in
+      let brownBall = Image.circle 50. Color.gold3 in
+      let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
+    let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
+      let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
+      Image.place_images objects posn background8
+    | anythingElse ->
+      let youWin = Image.text "You Win!" ~size:100.0 Color.gold in
+      place_image youWin (150., 300.) background8
 
 (* update : model -> model
 *)
@@ -81,7 +149,7 @@ let update { state; ball; paddle; score; ball2 } =
                         ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
                         ; paddle
                         ; score = {n = score.n + 1}
-                        ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)}}
+                        ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) +. 0.5)}}
        | false -> match ball2.y +. 100. >= (displayHeight -. 45.) with
            | true ->
              (match ball2.x > (paddle.x -. 10.) && ball2.x < (paddle.x +. 250.) with
@@ -94,13 +162,13 @@ let update { state; ball; paddle; score; ball2 } =
                                ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
                                ; paddle
                                ; score
-                               ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
+                               ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) +. 0.5)} })
            | false ->
              World { state
                    ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
                    ; paddle
                    ; score
-                   ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} }))
+                   ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) +. 0.5)} }))
     | false ->
       (match ball2.y +. 100. >= (displayHeight -. 45.) with
       | true ->
@@ -114,13 +182,13 @@ let update { state; ball; paddle; score; ball2 } =
                           ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
                           ; paddle
                           ; score
-                          ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
+                          ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) +. 0.5)} })
       | false ->
         World { state
               ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
               ; paddle
               ; score
-              ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 2.5) +. 0.1)} })
+              ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) +. 0.5)} })
 
 
 
@@ -137,7 +205,7 @@ let handleKey model key =
                       ; paddle = model.paddle
                       ; score = model.score
                       ; ball2 = model.ball2}
-    | false -> World { model with paddle = { x = model.paddle.x -. 30. } })
+    | false -> World { model with paddle = { x = model.paddle.x -. 60. } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
      | true -> World { state = model.state
@@ -145,7 +213,7 @@ let handleKey model key =
                      ; paddle = model.paddle
                      ; score = model.score
                      ; ball2 = model.ball2}
-    | false -> World { model with paddle = { x =  model.paddle.x +. 30. } })
+    | false -> World { model with paddle = { x =  model.paddle.x +. 60. } })
   | (_,_) -> failwith "hello"
 
 
