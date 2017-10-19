@@ -1,5 +1,6 @@
 (* file: paddle.ml
-   author: Matthew Kraft
+   author: Matthew Kraft and James Cassidy
+   date: Oct 19, 2017
 
    CSCI 1103 Computer Science I Honors
 
@@ -35,16 +36,13 @@ let background8 = Image.rectangle displayWidth displayHeight Color.black
 
 type paddle = { x : float }
 
-
 type state = Start | Ready
-
 
 type ball = { x : float; y : float }
 
 type ball2 = { x : float; y : float }
 
 type score = { n : int }
-
 
 type model = { state  : state
              ; ball   : ball
@@ -54,6 +52,9 @@ type model = { state  : state
              }
 
 (* draw : model -> Image.t
+   This function's complexity is rooted in the color changes of the balls and the
+   background, in correspondence to the score (referred to as "Levels"), which is a
+   form of extra work that I thought would be creative and original.
 *)
 let draw { state; ball; paddle; score; ball2 } =
   match { state; ball; paddle; score; ball2 } with
@@ -74,13 +75,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 0 | 1 | 2 | 3 | 4 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.black in
-      let brownBall = Image.circle 50. Color.white in
+      let firstBall = Image.circle 50. Color.black in
+      let secondBall = Image.circle 50. Color.white in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -92,13 +93,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 5 | 6 | 7 | 8 | 9 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.blue in
-      let brownBall = Image.circle 50. Color.cyan in
+      let firstBall = Image.circle 50. Color.blue in
+      let secondBall = Image.circle 50. Color.cyan in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -110,13 +111,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 10 | 11 | 12 | 13 | 14 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.gray10 in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.pink in
-      let brownBall = Image.circle 50. Color.deepPink4 in
+      let firstBall = Image.circle 50. Color.pink in
+      let secondBall = Image.circle 50. Color.deepPink4 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold4 in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -128,13 +129,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 15 | 16 | 17 | 18 | 19 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.yellow2 in
-      let brownBall = Image.circle 50. Color.white in
+      let firstBall = Image.circle 50. Color.yellow2 in
+      let secondBall = Image.circle 50. Color.white in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -146,13 +147,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 20 | 21 | 22 | 23 | 24 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.maroon in
-      let brownBall = Image.circle 50. Color.pink4 in
+      let firstBall = Image.circle 50. Color.maroon in
+      let secondBall = Image.circle 50. Color.pink4 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y); (0., 0.)
@@ -163,13 +164,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 25 | 26 | 27 | 28 | 29 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.sienna in
-      let brownBall = Image.circle 50. Color.goldenrod1 in
+      let firstBall = Image.circle 50. Color.sienna in
+      let secondBall = Image.circle 50. Color.goldenrod1 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -181,13 +182,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 30 | 31 | 32 | 33 | 34 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.greenYellow in
-      let brownBall = Image.circle 50. Color.antiqueWhite4 in
+      let firstBall = Image.circle 50. Color.greenYellow in
+      let secondBall = Image.circle 50. Color.antiqueWhite4 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -199,13 +200,13 @@ let draw { state; ball; paddle; score; ball2 } =
     | 35 | 36 | 37 | 38 | 39 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.gold2 in
-      let brownBall = Image.circle 50. Color.gold3 in
+      let firstBall = Image.circle 50. Color.gold2 in
+      let secondBall = Image.circle 50. Color.gold3 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
       let objects = [ paddler
-                    ; redBall
+                    ; firstBall
                     ; scoreBoard
-                    ; brownBall
+                    ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y)
@@ -220,8 +221,9 @@ let draw { state; ball; paddle; score; ball2 } =
       place_image youWin (150., 300.) background8
 
 (* update : model -> model
+   This function allows for the movement of each of the balls and allows the balls
+   to reset to the top of the screen once it hits the paddle, adding 1 to the score.
 *)
-
 let update { state; ball; paddle; score; ball2 } =
   match { state; ball; paddle; score; ball2 } with
   | { state = Start; ball; paddle; ball2 } -> World { state
@@ -281,8 +283,8 @@ let update { state; ball; paddle; score; ball2 } =
 
 
 (* handleKey : model -> key -> model
+   This function allows the paddle to move in accorance with the pressing of the keys.
 *)
-
 let handleKey model key =
   match (model.state, key) with
   | (Start, "left") | (Start, "right") -> World { model with state = Ready }
@@ -302,11 +304,17 @@ let handleKey model key =
                      ; score = model.score
                      ; ball2 = model.ball2}
     | false -> World { model with paddle = { x =  model.paddle.x +. 60. } })
-  | (_,_) -> failwith "hello"
+  | (_,_) -> failwith "Doesn't work"
 
-
+(* finished : model -> bool
+   This function lets the World know when to produce the gameOver image.
+*)
 let finished { state; ball; paddle; score; ball2 } = ball.y > displayHeight || ball2.y > displayHeight
 
+(* gameOver : model -> Image.t
+   This function produces a new Image once the game is finished, and, depending
+   on the score, will say Game Over or Congrats.
+*)
 let gameOver { state; ball; paddle; score; ball2 } =
   match score.n >= 40 with
   | true -> let sign = Image.text "CONGRATS!" ~size:80.0 Color.yellow in
@@ -319,11 +327,10 @@ let gameOver { state; ball; paddle; score; ball2 } =
     in
     place_images [sign; finalScore] [(125., 250.); (215., 350.)] background
 
-
-
-
-
-
+(* updateMouse : model -> x -> y -> click -> model
+   This extra function allows the game to pause when the mouse is clicked, and will
+   resume (go back to state = Ready) when a key is pressed.
+*)
 let updateMouse {state ; ball; paddle; score; ball2} coordinate1 coordinate2 click =
   match (coordinate1, coordinate2, click) with
   | (0., 0., "button_down") -> World {state; ball; paddle; score; ball2}
@@ -332,13 +339,6 @@ let updateMouse {state ; ball; paddle; score; ball2} coordinate1 coordinate2 cli
                            ; paddle
                            ; score
                            ; ball2}
-
-
-
-
-
-
-
 (* go : unit -> unit
 *)
 let go () =
