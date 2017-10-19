@@ -32,7 +32,6 @@ let background5 = Image.rectangle displayWidth displayHeight Color.blue
 let background6 = Image.rectangle displayWidth displayHeight Color.darkBlue
 let background7 = Image.rectangle displayWidth displayHeight Color.deepPink4
 let background8 = Image.rectangle displayWidth displayHeight Color.black
-let initialX = Random.float 500.
 
 type paddle = { x : float }
 
@@ -59,11 +58,14 @@ type model = { state  : state
 let draw { state; ball; paddle; score; ball2 } =
   match { state; ball; paddle; score; ball2 } with
   | { state = Start; ball; paddle; score; ball2 } ->
-    (let msg = Image.text "Press left or right arrow to start." ~size:40.0 Color.white in
-    let paddler = Image.rectangle 250. 35. Color.black in
+    (let msg = Image.text "Press left or right arrow to start/unpause." ~size:35.0 Color.white in
+     let pauseMsg = Image.text "Click to pause" ~size:30.0 Color.white in
+     let paddler = Image.rectangle 250. 35. Color.black in
      let images = [ msg
+                  ; pauseMsg
                   ; paddler] in
-     let posns = [((displayWidth /. 15.), (displayHeight /. 3.))
+     let posns = [((displayWidth /. 40.), (displayHeight /. 3.))
+                 ; ((displayWidth /. 3.), (displayHeight /. 3.+. 75.))
                  ; (paddle.x, (displayHeight -. (35. +. margin)))]
     in
     Image.place_images images posns background)
@@ -318,14 +320,34 @@ let gameOver { state; ball; paddle; score; ball2 } =
     place_images [sign; finalScore] [(125., 250.); (215., 350.)] background
 
 
+
+
+
+
+let updateMouse {state ; ball; paddle; score; ball2} coordinate1 coordinate2 click =
+  match (coordinate1, coordinate2, click) with
+  | (0., 0., "button_down") -> World {state; ball; paddle; score; ball2}
+  | anythingElse ->  World { state = Start
+                           ; ball
+                           ; paddle
+                           ; score
+                           ; ball2}
+
+
+
+
+
+
+
 (* go : unit -> unit
 *)
 let go () =
+  let _ = Random.self_init () in
   World.big_bang { state = Start
-                 ; ball = { x = initialX; y = 0.}
+                 ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
                  ; paddle = { x = displayWidth /. 2. -. 125.}
                  ; score = {n = 0}
-                 ; ball2 = { x = Random.float (displayWidth /. 2.); y = 0.} }
+                 ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.} }
     ~name: "Paddle"
     ~width: (f2I displayWidth)
     ~height: (f2I displayHeight)
@@ -333,6 +355,7 @@ let go () =
     ~on_tick: update
     ~rate: clockRate
     ~on_key_press: handleKey
+    ~on_mouse: updateMouse
     ~stop_when: finished
     ~to_draw_last: gameOver
 
