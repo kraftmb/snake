@@ -220,9 +220,14 @@ let handleKey model key =
 let finished { state; ball; paddle; score; ball2 } = ball.y > displayHeight || ball2.y > displayHeight
 
 let gameOver { state; ball; paddle; score; ball2 } =
-  let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
-  let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
-  place_images [sign; finalScore] [(125., 250.); (215., 350.)] background
+  match score.n >= 40 with
+  | true -> let sign = Image.text "CONGRATS!" ~size:80.0 Color.yellow in
+    let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
+    place_images [sign; finalScore] [(125., 250.); (215., 350.)] background6
+  | false ->
+    let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
+    let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
+    place_images [sign; finalScore] [(125., 250.); (215., 350.)] background
 
 
 (* go : unit -> unit
