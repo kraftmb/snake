@@ -30,7 +30,7 @@ let background3 = Image.rectangle displayWidth displayHeight Color.yellow
 let background4 = Image.rectangle displayWidth displayHeight Color.green3
 let background5 = Image.rectangle displayWidth displayHeight Color.blue
 let background6 = Image.rectangle displayWidth displayHeight Color.darkBlue
-let background7 = Image.rectangle displayWidth displayHeight Color.violet
+let background7 = Image.rectangle displayWidth displayHeight Color.deepPink4
 let background8 = Image.rectangle displayWidth displayHeight Color.black
 let initialX = Random.float 500.
 
@@ -86,14 +86,14 @@ let draw { state; ball; paddle; score; ball2} =
     | 10 | 11 | 12 | 13 | 14 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.gray10 in
     let paddler = Image.rectangle 250. 35. Color.black in
       let redBall = Image.circle 50. Color.pink in
-      let brownBall = Image.circle 50. Color.violet in
+      let brownBall = Image.circle 50. Color.deepPink4 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold4 in
     let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
       let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
       Image.place_images objects posn background3
     | 15 | 16 | 17 | 18 | 19 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
     let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.yellow in
+      let redBall = Image.circle 50. Color.yellow2 in
       let brownBall = Image.circle 50. Color.white in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
     let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
@@ -109,8 +109,8 @@ let draw { state; ball; paddle; score; ball2} =
       Image.place_images objects posn background5
     | 25 | 26 | 27 | 28 | 29 -> let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
     let paddler = Image.rectangle 250. 35. Color.black in
-      let redBall = Image.circle 50. Color.gray in
-      let brownBall = Image.circle 50. Color.gold in
+      let redBall = Image.circle 50. Color.sienna in
+      let brownBall = Image.circle 50. Color.goldenrod1 in
       let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
     let objects = [paddler; redBall; scoreBoard; brownBall; levelUp] in
       let posn = [(paddle.x, (displayHeight -. (35. +. margin))); (ball.x, ball.y); (0., 0.); (ball2.x, ball2.y); (displayWidth -. 190., 0.)] in
