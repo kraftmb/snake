@@ -1,9 +1,6 @@
 (* file: paddle.ml
-   author: Matthew Kraft and James Cassidy
+   author: Matthew Kraft
    date: Oct 19, 2017
-
-   CSCI 1103 Computer Science I Honors
-
    A simple game with a ball dropping from the top.
    A player uses the left and right arrow keys to move
    a paddle in an attempt to catch the ball.
@@ -16,14 +13,14 @@
 open World
 open Image
 open Color
-open Cs1103
+
 
 let clockRate = 0.02
 
-let randomColor = randomColor()
 
-let displayWidth = 750.
-let displayHeight = displayWidth
+
+let displayWidth = 1250.
+let displayHeight = 775.
 let margin = 10.0
 let background  = Image.rectangle displayWidth displayHeight Color.red
 let background2 = Image.rectangle displayWidth displayHeight Color.orangeRed
@@ -65,8 +62,8 @@ let draw { state; ball; paddle; score; ball2 } =
      let images = [ msg
                   ; pauseMsg
                   ; paddler] in
-     let posns = [((displayWidth /. 40.), (displayHeight /. 3.))
-                 ; ((displayWidth /. 3.), (displayHeight /. 3.+. 75.))
+     let posns = [((displayWidth /. 4.5), (displayHeight /. 3.))
+                 ; ((displayWidth /. 2.5), (displayHeight /. 3.+. 75.))
                  ; (paddle.x, (displayHeight -. (35. +. margin)))]
      in
      Image.place_images images posns background)
@@ -87,7 +84,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x +. 1., ball.y +. 1.)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background
     | 5 | 6 | 7 | 8 | 9 | 40 | 41 | 42 | 43 | 44 ->
@@ -105,7 +102,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background2
     | 10 | 11 | 12 | 13 | 14 | 45 | 46 | 47 | 48 | 49 ->
@@ -123,7 +120,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background3
     | 15 | 16 | 17 | 18 | 19 | 50 | 51 | 52 | 53 | 54 ->
@@ -141,7 +138,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background4
     | 20 | 21 | 22 | 23 | 24 | 55 | 56 | 57 | 58 | 59 ->
@@ -158,7 +155,7 @@ let draw { state; ball; paddle; score; ball2 } =
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y); (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background5
     | 25 | 26 | 27 | 28 | 29 | 60 | 61 | 62 | 63 | 64 ->
@@ -176,7 +173,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background6
     | 30 | 31 | 32 | 33 | 34 | 65 | 66 | 67 | 68 | 69 ->
@@ -194,7 +191,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background7
     | anythingElse ->
@@ -212,7 +209,7 @@ let draw { state; ball; paddle; score; ball2 } =
                  ; (ball.x, ball.y)
                  ; (0., 0.)
                  ; (ball2.x, ball2.y)
-                 ; (displayWidth -. 210., 0.)]
+                 ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background8
 
@@ -347,7 +344,7 @@ let handleKey model key =
                       ; paddle = model.paddle
                       ; score = model.score
                       ; ball2 = model.ball2}
-     | false -> World { model with paddle = { x = model.paddle.x -. 120. } })
+     | false -> World { model with paddle = { x = model.paddle.x -. (125. +. (float(model.score.n) *. 1.50)) } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
      | true -> World { state = model.state
@@ -355,7 +352,7 @@ let handleKey model key =
                      ; paddle = model.paddle
                      ; score = model.score
                      ; ball2 = model.ball2}
-     | false -> World { model with paddle = { x =  model.paddle.x +. 120. } })
+     | false -> World { model with paddle = { x =  model.paddle.x +. 125. +. (float(model.score.n) *. 1.50)} })
   | (_,_) -> failwith "Doesn't work"
 
 (* finished : model -> bool
@@ -374,44 +371,44 @@ let gameOver { state; ball; paddle; score; ball2 } =
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
     let mesg = Image.text "You SUCK" ~size:120.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background
   | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "You're ok" ~size:110.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background3
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background3
   | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "good score!" ~size:100.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background4
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background4
   | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "Incredible!" ~size:100.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background5
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background5
   | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "InSaNiTy" ~size:110.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background6
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background6
   | 69 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.blue in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.darkBlue in
     let mesg = Image.text "LOLOLOL" ~size:110.0 Color.blue in
     let secret = Image.text "(if you know what i mean)" ~size:40.0 Color.blue
     in
-    place_images [sign; finalScore; mesg; secret] [(125., 250.); (215., 350.); (100., 450.); (100., 550.)] background
+    place_images [sign; finalScore; mesg; secret] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background
   | anythingElse ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.goldenrod in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.goldenrod in
     let mesg = Image.text "You're a god" ~size:95.0 Color.goldenrod
     in
-    place_images [sign; finalScore; mesg] [(125., 250.); (215., 350.); (100., 450.)] background8
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background8
 
 (* updateMouse : model -> x -> y -> click -> model
    This extra function allows the game to pause when the mouse is clicked, and will
@@ -431,12 +428,12 @@ let go () =
   let _ = Random.self_init () in
   World.big_bang { state = Start
                  ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
-                 ; paddle = { x = displayWidth /. 2. -. 125.}
+                 ; paddle = { x = displayWidth /. 2. -. 150.}
                  ; score = {n = 0}
                  ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.} }
     ~name: "Paddle"
-    ~width: (f2I displayWidth)
-    ~height: (f2I displayHeight)
+    ~width: (int_of_float displayWidth)
+    ~height: (int_of_float displayHeight)
     ~to_draw: draw
     ~on_tick: update
     ~rate: clockRate
