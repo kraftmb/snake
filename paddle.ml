@@ -344,7 +344,7 @@ let handleKey model key =
                       ; paddle = model.paddle
                       ; score = model.score
                       ; ball2 = model.ball2}
-     | false -> World { model with paddle = { x = model.paddle.x -. (125. +. (float(model.score.n) *. 1.50)) } })
+     | false -> World { model with paddle = { x = model.paddle.x -. (100. +. (float(model.score.n) *. 1.75)) } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
      | true -> World { state = model.state
@@ -352,7 +352,7 @@ let handleKey model key =
                      ; paddle = model.paddle
                      ; score = model.score
                      ; ball2 = model.ball2}
-     | false -> World { model with paddle = { x =  model.paddle.x +. 125. +. (float(model.score.n) *. 1.50)} })
+     | false -> World { model with paddle = { x =  model.paddle.x +. 100. +. (float(model.score.n) *. 1.75)} })
   | (_,_) -> failwith "Doesn't work"
 
 (* finished : model -> bool
@@ -371,44 +371,44 @@ let gameOver { state; ball; paddle; score; ball2 } =
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.white in
     let mesg = Image.text "You SUCK" ~size:120.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.5, 450.)] background
   | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "You're ok" ~size:110.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background3
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.5, 450.)] background3
   | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "good score!" ~size:100.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background4
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.5, 450.)] background4
   | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "Incredible!" ~size:100.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background5
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.4, 450.)] background5
   | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.black in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.gray in
     let mesg = Image.text "InSaNiTy" ~size:110.0 Color.black
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background6
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.25, 450.)] background6
   | 69 ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.blue in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.darkBlue in
     let mesg = Image.text "LOLOLOL" ~size:110.0 Color.blue in
     let secret = Image.text "(if you know what i mean)" ~size:40.0 Color.blue
     in
-    place_images [sign; finalScore; mesg; secret] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background
+    place_images [sign; finalScore; mesg; secret] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.5, 450.)] background
   | anythingElse ->
     let sign = Image.text "GAME OVER" ~size:80.0 Color.goldenrod in
     let finalScore = Image.text ("Final Score = " ^ string_of_int score.n) ~size:40.0 Color.goldenrod in
     let mesg = Image.text "You're a god" ~size:95.0 Color.goldenrod
     in
-    place_images [sign; finalScore; mesg] [(displayWidth /. 3.5, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 4., 450.)] background8
+    place_images [sign; finalScore; mesg] [(displayWidth /. 3.25, 250.); (displayWidth /. 2.5, 350.); (displayWidth /. 3.5, 450.)] background8
 
 (* updateMouse : model -> x -> y -> click -> model
    This extra function allows the game to pause when the mouse is clicked, and will
