@@ -105,9 +105,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 2.)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 1.5)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background9
@@ -123,9 +123,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 2.)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 1.5)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background10
@@ -141,9 +141,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 2.)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 1.5)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background11
@@ -159,9 +159,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 1.5)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 1.25)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background12
@@ -177,9 +177,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 1.0)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 1.0)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background13
@@ -195,9 +195,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 0.5)
+                 ; (ball.x, ball.y)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.75)
+                 ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background14
@@ -233,7 +233,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                         ; levelUp
                         ; thirdBall] in
           let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                     ; (ball.x +. 1., ball.y +. 1.)
+                     ; (ball.x, ball.y)
                      ; (0., 0.)
                      ; (ball2.x, ball2.y)
                      ; (displayWidth -. 200., 0.)
@@ -479,52 +479,52 @@ let update { state; ball; paddle; score; ball2; ball3 } =
                              ; ball = { x = Random.float (displayWidth -. 50.); y = 0.}
                              ; paddle
                              ; score = {n = score.n + 1}
-                             ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 0.5)}
+                             ; ball2 = {x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 1.5)}
                              ; ball3}
             | false -> match ball2.y +. 100. >= (displayHeight -. 45.) with
               | true ->
                 (match ball2.x > (paddle.x -. 55.) && ball2.x < (paddle.x +. 250.) with
                  | true  -> World { state
-                                  ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                                  ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                                   ; paddle
                                   ; score = {n = score.n + 1}
                                   ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}
                                   ; ball3}
                  | false -> World { state
-                                  ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                                  ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                                   ; paddle
                                   ; score
-                                  ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 0.5)}
+                                  ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 1.5)}
                                   ; ball3})
               | false ->
                 World { state
-                      ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                      ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                       ; paddle
                       ; score
-                      ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 0.5)}
+                      ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 1.5)}
                       ; ball3}))
       | false ->
         (match ball2.y +. 100. >= (displayHeight -. 45.) with
          | true ->
            (match ball2.x > (paddle.x -. 55.) && ball2.x < (paddle.x +. 250.) with
             | true  -> World { state
-                             ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                             ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                              ; paddle
                              ; score = {n = score.n + 1}
                              ; ball2 = { x = Random.float (displayWidth -. 50.); y = 0.}
                              ; ball3}
             | false -> World { state
-                             ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                             ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                              ; paddle
                              ; score
-                             ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 0.5)}
+                             ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 1.5)}
                              ; ball3})
          | false ->
            World { state
-                 ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 1.5)}
+                 ; ball = { x = ball.x; y = ball.y +. ((1. /. 5. *. float score.n) +. 2.5)}
                  ; paddle
                  ; score
-                 ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 0.5)}
+                 ; ball2 = { x = ball2.x; y = ball2.y +. (((1. /. 5. *. float score.n) *. 1.25) *. 0.8 +. 1.5)}
                  ; ball3})
 
 
