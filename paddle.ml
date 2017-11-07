@@ -105,9 +105,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 1.)
+                 ; (ball.x, ball.y +. 2.)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.5)
+                 ; (ball2.x, ball2.y +. 1.5)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background9
@@ -123,9 +123,9 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                     ; secondBall
                     ; levelUp] in
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
-                 ; (ball.x, ball.y +. 1.5)
+                 ; (ball.x, ball.y +. 2.)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.5)
+                 ; (ball2.x, ball2.y +. 1.5)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background10
@@ -143,7 +143,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y +. 2.)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.5)
+                 ; (ball2.x, ball2.y +. 1.5)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background11
@@ -161,7 +161,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y +. 1.5)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.25)
+                 ; (ball2.x, ball2.y +. 1.25)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background12
@@ -179,7 +179,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y +. 1.0)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y +. 0.25)
+                 ; (ball2.x, ball2.y +. 1.0)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background13
@@ -197,7 +197,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
       let posn = [ (paddle.x, (displayHeight -. (35. +. margin)))
                  ; (ball.x, ball.y +. 0.5)
                  ; (0., 0.)
-                 ; (ball2.x, ball2.y)
+                 ; (ball2.x, ball2.y +. 0.75)
                  ; (displayWidth -. 200., 0.)]
       in
       Image.place_images objects posn background14
