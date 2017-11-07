@@ -14,10 +14,17 @@ open World
 open Image
 open Color
 
+let _ = Random.self_init ()
+
+let randomColor () =
+  let red   = Random.int 256 in
+  let green = Random.int 256 in
+  let blue  = Random.int 256
+  in
+  Color.make_color red green blue
+
 
 let clockRate = 0.02
-
-
 
 let displayWidth = 1250.
 let displayHeight = 775.
@@ -30,6 +37,20 @@ let background5 = Image.rectangle displayWidth displayHeight Color.blue
 let background6 = Image.rectangle displayWidth displayHeight Color.darkBlue
 let background7 = Image.rectangle displayWidth displayHeight Color.deepPink4
 let background8 = Image.rectangle displayWidth displayHeight Color.black
+let background9 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background10 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background11 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background12 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background13 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background14 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background15 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background16 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background17 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background18 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background19 = Image.rectangle displayWidth displayHeight (randomColor ())
+let background20 = Image.rectangle displayWidth displayHeight (randomColor ())
+
+
 
 type paddle = { x : float }
 
@@ -69,7 +90,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; ((displayWidth /. 2.375), (displayHeight /. 3. +. 75.))
                  ; (paddle.x, (displayHeight -. (35. +. margin)))]
      in
-     Image.place_images images posns background)
+     Image.place_images images posns background8)
   | { state = Ready; ball; paddle; score; ball2; ball3 } ->
     match score.n with
     | 0 | 1 | 2 | 3 | 4 ->
@@ -89,7 +110,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y +. 0.5)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background
+      Image.place_images objects posn background9
     | 5 | 6 | 7 | 8 | 9 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -107,7 +128,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y +. 0.5)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background2
+      Image.place_images objects posn background10
     | 10 | 11 | 12 | 13 | 14 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.gray10 in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -125,7 +146,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background3
+      Image.place_images objects posn background11
     | 15 | 16 | 17 | 18 | 19 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -143,7 +164,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background4
+      Image.place_images objects posn background12
     | 20 | 21 | 22 | 23 | 24 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -160,7 +181,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background5
+      Image.place_images objects posn background13
     | 25 | 26 | 27 | 28 | 29 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -178,7 +199,7 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background6
+      Image.place_images objects posn background14
     | 30 | 31 | 32 | 33 | 34 ->
       let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
       let paddler = Image.rectangle 250. 35. Color.black in
@@ -196,14 +217,14 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                  ; (ball2.x, ball2.y)
                  ; (displayWidth -. 200., 0.)]
       in
-      Image.place_images objects posn background7
+      Image.place_images objects posn background15
     | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44  ->
           let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
           let paddler = Image.rectangle 250. 35. Color.black in
           let firstBall = Image.circle 50. Color.green in
           let secondBall = Image.circle 50. Color.blue in
           let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
-          let thirdBall = Image.circle 20. Color.white in
+          let thirdBall = Image.circle 20. (randomColor ()) in
           let objects = [ paddler
                         ; firstBall
                         ; scoreBoard
@@ -217,14 +238,14 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                      ; (displayWidth -. 200., 0.)
                      ; (ball3.x, ball3.y)]
           in
-          Image.place_images objects posn background
+          Image.place_images objects posn background16
     | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 ->
           let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.gray10 in
           let paddler = Image.rectangle 250. 35. Color.black in
           let firstBall = Image.circle 50. Color.maroon2 in
           let secondBall = Image.circle 50. Color.dodgerBlue2 in
           let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold4 in
-          let thirdBall = Image.circle 20. Color.white in
+          let thirdBall = Image.circle 20. (randomColor ()) in
           let objects = [ paddler
                         ; firstBall
                         ; scoreBoard
@@ -238,14 +259,14 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                      ; (displayWidth -. 200., 0.)
                      ; (ball3.x, ball3.y)]
           in
-          Image.place_images objects posn background3
+          Image.place_images objects posn background17
     | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 ->
           let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
           let paddler = Image.rectangle 250. 35. Color.black in
           let firstBall = Image.circle 50. Color.maroon in
           let secondBall = Image.circle 50. Color.pink4 in
           let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
-          let thirdBall = Image.circle 20. Color.white in
+          let thirdBall = Image.circle 20. (randomColor ()) in
           let objects = [ paddler
                         ; firstBall
                         ; scoreBoard
@@ -259,14 +280,14 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                      ; (displayWidth -. 200., 0.)
                      ; (ball3.x, ball3.y)]
           in
-          Image.place_images objects posn background5
+          Image.place_images objects posn background18
     | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 ->
           let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
           let paddler = Image.rectangle 250. 35. Color.black in
           let firstBall = Image.circle 50. Color.red4 in
           let secondBall = Image.circle 50. Color.cyan4 in
           let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
-          let thirdBall = Image.circle 20. Color.white in
+          let thirdBall = Image.circle 20. (randomColor ()) in
           let objects = [paddler
                         ; firstBall
                         ; scoreBoard
@@ -280,14 +301,14 @@ let draw { state; ball; paddle; score; ball2; ball3 } =
                      ; (displayWidth -. 200., 0.)
                      ; (ball3.x, ball3.y)]
           in
-          Image.place_images objects posn background7
+          Image.place_images objects posn background19
         | anythingElse ->
           let scoreBoard = Image.text ("Score = " ^ string_of_int score.n) ~size:30.0 Color.white in
           let paddler = Image.rectangle 250. 35. Color.black in
           let firstBall = Image.circle 50. Color.gold2 in
           let secondBall = Image.circle 50. Color.gold3 in
           let levelUp = Image.text ("Level " ^ string_of_int (score.n / 5 + 1)) ~size:50.0 Color.gold in
-          let thirdBall = Image.circle 20. Color.gold4 in
+          let thirdBall = Image.circle 20. (randomColor ()) in
           let objects = [ paddler
                         ; firstBall
                         ; scoreBoard
@@ -521,7 +542,7 @@ let handleKey model key =
                       ; score = model.score
                       ; ball2 = model.ball2
                       ; ball3 = model.ball3}
-     | false -> World { model with paddle = { x = model.paddle.x -. (100. +. (float(model.score.n) *. 1.75)) } })
+     | false -> World { model with paddle = { x = model.paddle.x -. (100. +. (float(model.score.n) *. 2.)) } })
   | (Ready, "right") ->
     (match model.paddle.x >= (displayWidth -. (margin +. 250.)) with
      | true -> World { state = model.state
@@ -530,7 +551,7 @@ let handleKey model key =
                      ; score = model.score
                      ; ball2 = model.ball2
                      ; ball3 = model.ball3}
-     | false -> World { model with paddle = { x =  model.paddle.x +. 100. +. (float(model.score.n) *. 1.75)} })
+     | false -> World { model with paddle = { x =  model.paddle.x +. 100. +. (float(model.score.n) *. 2.)} })
   | (_,_) -> failwith "Doesn't work"
 
 (* finished : model -> bool
